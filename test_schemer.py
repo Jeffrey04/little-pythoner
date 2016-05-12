@@ -2,7 +2,7 @@ import unittest
 import schemer
 from operator import *
 
-class PreprocessorTest(unittest.TestCase):
+class SchemerTest(unittest.TestCase):
     def test_isatom(self):
         test_cases = (('atom', True),
                       ('turkey', True),
@@ -15,6 +15,50 @@ class PreprocessorTest(unittest.TestCase):
 
         for atom, expected in test_cases:
             result = schemer.isatom(atom)
+            self.assertEqual(result, expected)
+
+    def test_car(self):
+        test_cases = ((('a', 'b', 'c'), 'a'),
+                      ((('a', 'b', 'c'), 'x', 'y', 'z'), ('a', 'b', 'c')), 
+                      (((('hotdogs', ),), ('and', ), ('pickle', ), 'relish'), (('hotdogs', ),)),
+                      (((('hotdogs', ), ), ('and', )), (('hotdogs', ), )))
+
+        for l, expected in test_cases:
+            result = schemer.car(l)
+            self.assertEqual(result, expected)
+
+    def test_cdr(self):
+        test_cases = ((('a', 'b', 'c'), ('b', 'c')),
+                      ((('a', 'b', 'c'), 'x', 'y', 'z'), ('x', 'y', 'z')),
+                      (('hamburgers', ), ()))
+
+        for l, expected in test_cases:
+            result = schemer.cdr(l)
+            self.assertEqual(result, expected)
+
+    def test_cons(self):
+        test_cases = (('peanut', ('butter', 'and', 'jelly'), ('peanut', 'butter', 'and', 'jelly')),
+                      (('banana', 'and'), ('peanut', 'butter', 'and', 'jelly'), (('banana', 'and'), 'peanut', 'butter', 'and', 'jelly')),
+                      ((('help', ), 'this'), ('is', 'very', 'hard', 'to', 'learn'), ((('help', ), 'this'), 'is', 'very', 'hard', 'to', 'learn')))
+
+        for s, l, expected in test_cases:
+            result = schemer.cons(s, l)
+            self.assertEqual(result, expected)
+
+    def test_isnull(self):
+        test_cases = (((), True),
+                      (('a', 'b', 'c'), False))
+
+        for l, expected in test_cases:
+            result = schemer.isnull(l)
+            self.assertEqual(result, expected)
+
+    def test_iseq(self):
+        test_cases = (('Harry', 'Harry', True),
+                      ('margarine', 'butter', False))
+
+        for alpha, beta, expected in test_cases:
+            result = schemer.iseq(alpha, beta)
             self.assertEqual(result, expected)
 
     def test_islat(self):

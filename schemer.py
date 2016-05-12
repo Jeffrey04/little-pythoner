@@ -1,48 +1,50 @@
 from operator import *
 
+# Chapter 1
+
 def isatom(atom):
     return not isinstance(atom, tuple) and (isinstance(atom, str)
                                             or (isinstance(atom, int) and atom >= -1))
 
-def cons(head, tail):
+def cons(s, l):
     """
     The Law of Cons
     The primitive cons takes two arguments.
     The second argument to cons must be a list. The result is a list.
     """
-    assert isinstance(tail, tuple)
+    assert isinstance(l, tuple)
 
-    return (head, ) + tail
+    return (s, ) + l
 
-def car(_list):
+def car(l):
     """
     The Law of Car:
     The primitive car is defined only for non-empty lists
     """
-    assert _list
-    assert isinstance(_list, tuple)
+    assert l
+    assert isinstance(l, tuple)
 
-    return _list[0]
+    return l[0]
 
-def cdr(_list):
+def cdr(l):
     """
     The Law of Cdr:
     The primitive cdr is defined only for non-empty lists.
     The cdr of any non-empty lists is always another list.
     """
-    assert _list
-    assert isinstance(_list, tuple)
+    assert l
+    assert isinstance(l, tuple)
 
-    return _list[1:]
+    return l[1:]
 
-def isnull(_list):
+def isnull(l):
     """
     The Law of Null?
     The primitive null? is defined only for lists.
     """
-    assert isinstance(_list, tuple)
+    assert isinstance(l, tuple)
 
-    return _list == ()
+    return l == ()
 
 def iseq(alpha, beta):
     """
